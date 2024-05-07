@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class User(AbstractUser):
     username = models.CharField(unique=True, max_length=100)
@@ -26,7 +27,7 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.FileField(upload_to="user_folder", default="default-user.jpg", null=True, blank=True)
+    image = models.FileField(upload_to="user_folder", default="boy.jpg", null=True, blank=True)
     full_name = models.CharField(max_length=100)
     country = models.CharField(max_length=100, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
@@ -45,12 +46,12 @@ class Profile(models.Model):
         super(Profile, self).save(*args, **kwargs)
 
 
+
+@receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
+@receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-
-post_save.connect(create_user_profile, sender=User)
-post_save.connect(save_user_profile, sender=User)
