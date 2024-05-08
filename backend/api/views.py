@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from api.utils import createOtp
+from api.utils import createOtp, sendMail
 from rest_framework.response import Response
 from userauths.models import User
 from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND
@@ -50,7 +50,7 @@ class PasswordResetEmailVerifyView(generics.RetrieveAPIView):
 
             link = f"http://localhost:5173/create-new-password/?otp={user.otp}&uuid={uuidb64}&refresh_token={refresh_token}"
 
-            print("link is -------", link)
+            sendMail(user=user, mail_subject='Password Reset Email',email_template='emails/passwordResetEmail.html', link=link)
 
             return user
         else:
