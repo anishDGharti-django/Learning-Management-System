@@ -9,11 +9,10 @@ export const login = async (email, password) => {
     const { data, status } = await axios.post(`user/token/`, {
       email,
       password,
-    });
+  });
 
     if (status === 200) {
       setAuthUser(data.access, data.refresh);
-      alert("login successful");
     }
 
     return { data, error: null };
