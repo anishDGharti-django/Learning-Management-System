@@ -4,7 +4,7 @@ import { CartContext } from "../plugin/Context";
 import { useAuthStore } from "../../store/auth";
 
 function BaseHeader() {
-    const [cartCount, setCartCount] = useContext(CartContext);
+    // const [cartCount, setCartCount] = useContext(CartContext);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
@@ -196,9 +196,9 @@ function BaseHeader() {
                                 </Link>
                             </>
                         )}
-                        <Link className="btn btn-success ms-2" to="/cart/">
+                        {/* <Link className="btn btn-success ms-2" to="/cart/">
                             Cart ({cartCount}) <i className="fas fa-shopping-cart"> </i>
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </nav>

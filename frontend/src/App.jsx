@@ -1,35 +1,111 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+
+import { CartContext, ProfileContext } from "./views/plugin/Context";
+import apiInstance from "./utils/axios";
+import CartId from "./views/plugin/CartId";
+
+import MainWrapper from "./layouts/MainWrapper";
+import PrivateRoute from "./layouts/PrivateRoute";
+
+import Register from "../src/views/auth/Register";
+import Login from "../src/views/auth/Login";
+import Logout from "./views/auth/Logout";
+import ForgotPassword from "./views/auth/ForgotPassword";
+import CreateNewPassword from "./views/auth/CreateNewPassword";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [cartCount, setCartCount] = useState(0);
+  // const [profile, setProfile] = useState([]);
+
+  // useEffect(() => {
+  //   apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
+  //     setCartCount(res.data?.length);
+  //   });
+
+  //   useAxios()
+  //     .get(`user/profile/${UserData()?.user_id}/`)
+  //     .then((res) => {
+  //       setProfile(res.data);
+  //     });
+  // }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+   
+        <BrowserRouter>
+          <MainWrapper>
+            <Routes>
+              <Route path="/register/" element={<Register />} />
+              <Route path="/login/" element={<Login />} />
+              <Route path="/logout/" element={<Logout />} />
+              <Route path="/forgot-password/" element={<ForgotPassword />} />
+              <Route
+                path="/create-new-password/"
+                element={<CreateNewPassword />}
+              />
+
+              {/* Base Routes */}
+              {/* <Route path="/" element={<Index />} /> */}
+              {/* <Route path="/course-detail/:slug/" element={<CourseDetail />} /> */}
+              {/* <Route path="/cart/" element={<Cart />} /> */}
+              {/* <Route path="/checkout/:order_oid/" element={<Checkout />} /> */}
+              {/* <Route
+                path="/payment-success/:order_oid/"
+                element={<Success />}
+              /> */}
+              {/* <Route path="/search/" element={<Search />} /> */}
+
+              {/* Student Routes */}
+              {/* <Route
+                path="/student/dashboard/"
+                element={<StudentDashboard />}
+              />
+              <Route path="/student/courses/" element={<StudentCourses />} />
+              <Route
+                path="/student/courses/:enrollment_id/"
+                element={<StudentCourseDetail />}
+              />
+              <Route path="/student/wishlist/" element={<Wishlist />} />
+              <Route path="/student/profile/" element={<StudentProfile />} />
+              <Route
+                path="/student/change-password/"
+                element={<StudentChangePassword />}
+              /> */}
+
+              {/* Teacher Routes */}
+              {/* <Route path="/instructor/dashboard/" element={<Dashboard />} />
+              <Route path="/instructor/courses/" element={<Courses />} />
+              <Route path="/instructor/reviews/" element={<Review />} />
+              <Route path="/instructor/students/" element={<Students />} />
+              <Route path="/instructor/earning/" element={<Earning />} />
+              <Route path="/instructor/orders/" element={<Orders />} />
+              <Route path="/instructor/coupon/" element={<Coupon />} />
+              <Route
+                path="/instructor/notifications/"
+                element={<TeacherNotification />}
+              />
+              <Route path="/instructor/question-answer/" element={<QA />} />
+              <Route
+                path="/instructor/change-password/"
+                element={<ChangePassword />}
+              />
+              <Route path="/instructor/profile/" element={<Profile />} />
+              <Route
+                path="/instructor/create-course/"
+                element={<CourseCreate />}
+              />
+              <Route
+                path="/instructor/edit-course/:course_id/"
+                element={<CourseEdit />}
+              /> */}
+            </Routes>
+          </MainWrapper>
+        </BrowserRouter>
+    
+  );
 }
 
-export default App
+export default App;
+
+
+
