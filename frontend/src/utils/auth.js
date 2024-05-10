@@ -14,6 +14,7 @@ export const login = async (email, password) => {
     if (status === 200) {
       setAuthUser(data.access, data.refresh);
     }
+    alert("anish");
 
     return { data, error: null };
   } catch (error) {
