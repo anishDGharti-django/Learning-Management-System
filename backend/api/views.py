@@ -31,9 +31,7 @@ class RegisterView(generics.CreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = api_serializers.RegisterSerializer
 
-    @swagger_auto_schema(operation_description="Register a new user with email and password.")
-    def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
+
 
 class PasswordResetEmailVerifyView(generics.RetrieveAPIView):
     """
@@ -66,7 +64,7 @@ class PasswordResetEmailVerifyView(generics.RetrieveAPIView):
             user.otp = createOtp()
             user.save()
 
-            link = f"http://localhost:5173/create-new-password/?otp={user.otp}&uuid={uuidb64}&refresh_token={refresh_token}"
+            link = f"http://localhost:5173/create-new-password/?otp={user.otp}&uuidb64={uuidb64}&refresh_token={refresh_token}"
             sendMail(
                 user=user,
                 mail_subject='Password Reset Email',
@@ -104,9 +102,10 @@ class PasswordChangeApiView(generics.CreateAPIView):
         otp = request.data.get("otp")
         primary_key = request.data.get("uuidb64")
         password = request.data.get("password")
-
+        print(otp, primary_key, password)
         try:
             user = User.objects.get(id=primary_key, otp=otp)
+            print('user is ', user)
             user.set_password(password)
             user.otp = ""
             user.save()

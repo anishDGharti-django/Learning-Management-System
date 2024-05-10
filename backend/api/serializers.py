@@ -13,24 +13,24 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         token['email'] = user.email
 
-
+        print(token)
         return token
 
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     password =  serializers.CharField(write_only=True,required=True, validators=[validate_password])
-    confirm_password = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
 
 
     class Meta:
         model = User
-        fields = ['email', 'full_name', 'password', 'confirm_password']
+        fields = ['email', 'full_name', 'password', 'password2']
 
 
     def validate(self, attrs):
-
-        if attrs['password'] != attrs['confirm_password']:
+        print("Payload Before Validation:", attrs)
+        if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError({'password': "Password fields didnot match"}
                                               )   
         return attrs
