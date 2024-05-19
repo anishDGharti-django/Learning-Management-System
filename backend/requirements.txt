@@ -1,7 +1,9 @@
 asgiref==3.8.1
+astroid==3.1.0
 certifi==2024.2.2
 charset-normalizer==3.3.2
 decorator==4.4.2
+dill==0.3.8
 Django==5.0.5
 django-cors-headers==4.3.1
 django-jazzmin==3.0.0
@@ -13,12 +15,16 @@ idna==3.7
 imageio==2.34.1
 imageio-ffmpeg==0.4.9
 inflection==0.5.1
+isort==5.13.2
+mccabe==0.7.0
 moviepy==1.0.3
 numpy==1.26.4
 packaging==24.0
 pillow==10.3.0
+platformdirs==4.2.1
 proglog==0.1.10
 PyJWT==2.8.0
+pylint==3.1.1
 python-decouple==3.8
 pytz==2024.1
 PyYAML==6.0.1
@@ -26,6 +32,9 @@ requests==2.31.0
 shortuuid==1.0.13
 six==1.16.0
 sqlparse==0.5.0
+stripe==9.7.0
+tomlkit==0.12.5
 tqdm==4.66.4
+typing_extensions==4.11.0
 uritemplate==4.1.1
 urllib3==2.2.1

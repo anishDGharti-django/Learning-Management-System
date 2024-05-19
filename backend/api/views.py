@@ -16,6 +16,12 @@ from api.utils import createOtp, sendMail
 from api import models as api_models
 
 
+
+
+
+
+
+
 class MyTokenObtainPairView(TokenObtainPairView):
     """
     Obtain a pair of access and refresh tokens.
@@ -397,3 +403,19 @@ class CouponApplyAPIView(generics.CreateAPIView):
             return Response({"message": "Coupon Not Found", "icon": "error"}, status=status.HTTP_404_NOT_FOUND)
 
 
+
+
+class StripeCheckoutAPIView(generics.CreateAPIView):
+    serializer_class = api_serializers.CartOrderSerializer
+    permission_classes= [AllowAny,]
+
+    def create(self, request, *args, **kwargs):
+        order_oid = self.kwargs.get('order_oid')
+        order =  api_models.CartOrder.objects.get(oid=order_oid)
+
+        if not order:
+            return Response({"message": "order not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        try:
+
+            checkout_session = 
