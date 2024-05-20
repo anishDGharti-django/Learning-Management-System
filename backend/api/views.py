@@ -792,7 +792,7 @@ class CouponApplyAPIView(generics.CreateAPIView):
             return Response({"message": "Coupon Not Found", "icon": "error"}, status=status.HTTP_404_NOT_FOUND)
 
 class StripeCheckoutAPIView(generics.CreateAPIView):
-    serializer_class = api_serializer.CartOrderSerializer
+    serializer_class = api_serializers.CartOrderSerializer
     permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
@@ -845,7 +845,7 @@ def get_access_token(client_id, secret_key):
     
 
 class PaymentSuccessAPIView(generics.CreateAPIView):
-    serializer_class = api_serializer.CartOrderSerializer
+    serializer_class = api_serializers.CartOrderSerializer
     queryset = api_models.CartOrder.objects.all()
 
     def create(self, request, *args, **kwargs):
@@ -926,7 +926,7 @@ class PaymentSuccessAPIView(generics.CreateAPIView):
                     return Response({"message": "Payment Failed"})
             
 class SearchCourseAPIView(generics.ListAPIView):
-    serializer_class = api_serializer.CourseSerializer
+    serializer_class = api_serializers.CourseSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):
