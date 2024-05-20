@@ -161,6 +161,8 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "Learning Management System<anishgharti10@gmail.com>"
 
+STRIPE_SECRET_KEY = 'sk_test_51PID5OARx9rXfpYkHIyP4mHI3CGIeajMEpFyqnmwCuEKWgnWpM4rhshgZ9itFHw5K5PyAsia9xsmRpeGMA6CNjaT00LjuHoNZG'
+
 
 JAZZMIN_SETTINGS = {
     "site_title": "Desphixs LMS Admin",
