@@ -13,6 +13,7 @@ import Login from "../src/views/auth/Login";
 import Logout from "./views/auth/Logout";
 import ForgotPassword from "./views/auth/ForgotPassword";
 import CreateNewPassword from "./views/auth/CreateNewPassword";
+import Index from "./views/base/Index";
 
 function App() {
   // const [cartCount, setCartCount] = useState(0);
@@ -45,7 +46,7 @@ function App() {
               />
 
               {/* Base Routes */}
-              {/* <Route path="/" element={<Index />} /> */}
+              <Route path="/" element={<Index />} />
               {/* <Route path="/course-detail/:slug/" element={<CourseDetail />} /> */}
               {/* <Route path="/cart/" element={<Cart />} /> */}
               {/* <Route path="/checkout/:order_oid/" element={<Checkout />} /> */}
