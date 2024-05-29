@@ -39,4 +39,8 @@ urlpatterns = [
         api_views.StripeCheckoutAPIView.as_view(),
     ),
     path("payment/payment-sucess/", api_views.PaymentSuccessAPIView.as_view()),
+
+
+    # studentapi endpoints
+    path('student/summary/<user_id>/', api_views.StudentSummaryApiView.as_view()),
 ]
