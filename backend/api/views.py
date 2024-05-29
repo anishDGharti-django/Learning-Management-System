@@ -1025,5 +1025,57 @@ class StudentSummaryApiView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data
+                        
+                        )
 
+
+
+class StudentCourseListAPIView(generics.ListAPIView):
+    serializer_class = api_serializers.EnrolledCourseSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        user =  User.objects.get(id=user_id)
+        return api_models.EnrolledCourse.objects.filter(user=user)
+
+
+
+
+class StudentCourseDetailAPIView(generics.RetrieveAPIView):
+    serializer_class = api_serializer.EnrolledCourseSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'enrollment_id'
+
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        enrollment_id = self.kwargs['enrollment_id']
+
+        user = User.objects.get(id=user_id)
+        return api_models.EnrolledCourse.objects.get(user=user, enrollment_id=enrollment_id)
+         
+
+
+class StudentCourseCompletedCreateAPIView(generics.CreateAPIView):
+    serializer_class = api_serializers.CompletedLessonSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        user_id = request.data['user_id']
+        course_id = request.data['course_id']
+        variant_item_id = request.data['variant_item_id']
+
+        user = User.objects.get(id=user_id)
+        course = api_models.Course.objects.get(id=course_id)
+        variant_item = api_models.VariantItem.objects.get(variant_item_id=variant_item_id)
+
+        completed_lessons = api_models.CompletedLesson.objects.filter(user=user, course=course, variant_item=variant_item).first()
+
+        if completed_lessons:
+            completed_lessons.delete()
+            return Response({"message": "Course marked as not completed"})
+
+        else:
+            api_models.CompletedLesson.objects.create(user=user, course=course, variant_item=variant_item)
+            return Response({"message": "Course marked as completed"})         
