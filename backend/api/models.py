@@ -194,7 +194,7 @@ class VariantItem(models.Model):
             self.content_duration = duration_text
             super().save(update_fields=['content_duration'])
 
-class Question_Answer(models.Model):
+class   Question_Answer(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=1000, null=True, blank=True)
