@@ -16,6 +16,7 @@ urlpatterns = [
         api_views.PasswordResetEmailVerifyView.as_view(),
         name="password_reset_email_verify",
     ),
+    
     path(
         "user/password-change/",
         api_views.PasswordChangeApiView.as_view(),

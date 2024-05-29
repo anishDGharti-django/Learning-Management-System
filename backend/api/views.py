@@ -142,6 +142,28 @@ class PasswordChangeApiView(generics.CreateAPIView):
             )
 
 
+
+class ChangePasswordAPIView(generics.CreateAPIView):
+    serializer_class = api_serializers.UserSerializer
+    permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        user_id = request.data['user_id']
+        old_password = request.data['old_password']
+        new_password = request.data['new_password']
+
+        user = User.objects.get(id=user_id)
+        if user is not None:
+            if check_password(old_password, user.password):
+                user.set_password(new_password)
+                user.save()
+                return Response({"message": "Password changed successfully", "icon": "success"})
+            else:
+                return Response({"message": "Old password is incorrect", "icon": "warning"})
+        else:
+            return Response({"message": "User does not exists", "icon": "error"})
+
+
 class CategoryListAPIView(generics.ListAPIView):
     queryset = api_models.Category.objects.filter(active=True)
     serializer_class = api_serializers.CategorySerializer
@@ -1079,3 +1101,47 @@ class StudentCourseCompletedCreateAPIView(generics.CreateAPIView):
         else:
             api_models.CompletedLesson.objects.create(user=user, course=course, variant_item=variant_item)
             return Response({"message": "Course marked as completed"})         
+        
+
+
+class StudentNoteCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = api_serializers.NoteSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        enrollment_id = self.kwargs['enrollment_id']
+
+        user = User.objects.get(id=user_id)
+        enrolled = api_models.EnrolledCourse.objects.get(enrollment_id=enrollment_id)
+        
+        return api_models.Note.objects.filter(user=user, course=enrolled.course)
+
+    def create(self, request, *args, **kwargs):
+        user_id = request.data['user_id']
+        enrollment_id = request.data['enrollment_id']
+        title = request.data['title']
+        note = request.data['note']
+
+        user = User.objects.get(id=user_id)
+        enrolled = api_models.EnrolledCourse.objects.get(enrollment_id=enrollment_id)
+        
+        api_models.Note.objects.create(user=user, course=enrolled.course, note=note, title=title)
+
+        return Response({"message": "Note created successfullly"}, status=status.HTTP_201_CREATED)
+            
+
+
+class StudentNoteDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = api_serializers.NoteSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        enrollment_id = self.kwargs['enrollment_id']
+        note_id = self.kwargs['note_id']
+
+        user = User.objects.get(id=user_id)
+        enrolled = api_models.EnrolledCourse.objects.get(enrollment_id=enrollment_id)
+        note = api_models.Note.objects.get(user=user, course=enrolled.course, id=note_id)
+        return note
