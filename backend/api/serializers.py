@@ -19,6 +19,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    # print(" I AM IN REGISTER SERILIZER")
+
+
     password =  serializers.CharField(write_only=True,required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
 
@@ -28,12 +31,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['email', 'full_name', 'password', 'password2']
 
 
-    def validate(self, attrs):
-        print("Payload Before Validation:", attrs)
-        if attrs['password'] != attrs['password2']:
+    def validate(self, anish):
+        print("Payload Before Validation:", anish)
+        if anish['password'] != anish['password2']:
             raise serializers.ValidationError({'password': "Password fields didnot match"}
                                               )   
-        return attrs
+        return anish
     
 
 

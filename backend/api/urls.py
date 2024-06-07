@@ -16,7 +16,6 @@ urlpatterns = [
         api_views.PasswordResetEmailVerifyView.as_view(),
         name="password_reset_email_verify",
     ),
-    
     path(
         "user/password-change/",
         api_views.PasswordChangeApiView.as_view(),
@@ -40,8 +39,6 @@ urlpatterns = [
         api_views.StripeCheckoutAPIView.as_view(),
     ),
     path("payment/payment-sucess/", api_views.PaymentSuccessAPIView.as_view()),
-
-    
     # studentapi endpoints
     path("student/summary/<user_id>/", api_views.StudentSummaryApiView.as_view()),
     path(
